@@ -1,0 +1,6 @@
+projectKey=pmytree
+serverUrl=http://localhost:9000
+serverVersion=6.7.6.38781
+dashboardUrl=http://localhost:9000/dashboard/index/pmytree
+ceTaskId=AWoHzuXG842hQfKZAj4C
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWoHzuXG842hQfKZAj4C

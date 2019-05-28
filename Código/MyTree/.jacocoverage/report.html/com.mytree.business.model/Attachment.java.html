@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Attachment.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.business.model</a> &gt; <span class="el_source">Attachment.java</span></div><h1>Attachment.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.business.model;
+
+import java.util.Date;
+import java.util.List;
+
+public final class Attachment {
+
+    private static final int HASH = 5;
+    private static final int HASH_RANDOM = 53;
+
+    private int id;
+    private boolean familyOwner;
+    private List&lt;Integer&gt; owners;
+    private String name;
+    private String history;
+    private String attachmentPath;
+    private Date fromDate;
+    private Date toDate;
+
+<span class="fc" id="L25">    public Attachment() {</span>
+<span class="fc" id="L26">        this.id = -1;</span>
+<span class="fc" id="L27">    }</span>
+
+    public int getId() {
+<span class="fc" id="L30">        return id;</span>
+    }
+
+    public void setId(final int id) {
+<span class="fc" id="L34">        this.id = id;</span>
+<span class="fc" id="L35">    }</span>
+
+    public boolean isFamilyOwner() {
+<span class="fc" id="L38">        return familyOwner;</span>
+    }
+
+    public void setFamilyOwner(final boolean familyOwner) {
+<span class="fc" id="L42">        this.familyOwner = familyOwner;</span>
+<span class="fc" id="L43">    }</span>
+
+    public List&lt;Integer&gt; getOwners() {
+<span class="fc" id="L46">        return owners;</span>
+    }
+
+    public void setOwners(final List&lt;Integer&gt; owners) {
+<span class="fc" id="L50">        this.owners = owners;</span>
+<span class="fc" id="L51">    }</span>
+
+    public String getName() {
+<span class="fc" id="L54">        return name;</span>
+    }
+
+    public void setName(final String name) {
+<span class="fc" id="L58">        this.name = name;</span>
+<span class="fc" id="L59">    }</span>
+
+    public String getHistory() {
+<span class="fc" id="L62">        return history;</span>
+    }
+
+    public void setHistory(final String history) {
+<span class="fc" id="L66">        this.history = history;</span>
+<span class="fc" id="L67">    }</span>
+
+    public String getAttachmentPath() {
+<span class="fc" id="L70">        return attachmentPath;</span>
+    }
+
+    public void setAttachmentPath(final String attachmentPath) {
+<span class="fc" id="L74">        this.attachmentPath = attachmentPath;</span>
+<span class="fc" id="L75">    }</span>
+
+    public Date getFromDate() {
+<span class="fc" id="L78">        return (Date) fromDate.clone();</span>
+    }
+
+    public void setFromDate(final Date fromDate) {
+<span class="fc" id="L82">        this.fromDate = (Date) fromDate.clone();</span>
+<span class="fc" id="L83">    }</span>
+
+    public Date getToDate() {
+<span class="fc" id="L86">        return (Date) toDate.clone();</span>
+    }
+
+    public void setToDate(final Date toDate) {
+<span class="fc" id="L90">        this.toDate = (Date) toDate.clone();</span>
+<span class="fc" id="L91">    }</span>
+
+    @Override
+    public boolean equals(final Object other) {
+<span class="fc bfc" id="L95" title="All 4 branches covered.">        if (other == null || !(other instanceof Attachment)) {</span>
+<span class="fc" id="L96">            return false;</span>
+        }
+
+<span class="fc" id="L99">        Attachment otherAttachment = (Attachment) other;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        return id == otherAttachment.getId();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L105">        int hash = HASH;</span>
+<span class="nc" id="L106">        hash = HASH_RANDOM * hash + this.id;</span>
+<span class="nc" id="L107">        return hash;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserDetailsDialogController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.ui.controller</a> &gt; <span class="el_source">UserDetailsDialogController.java</span></div><h1>UserDetailsDialogController.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.ui.controller;
+
+import com.mytree.business.logic.BusinessLogicLocator;
+import com.mytree.business.model.User;
+import com.mytree.utils.Constants;
+import java.io.File;
+import java.text.DateFormat;
+import java.util.Locale;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+public final class UserDetailsDialogController extends BaseController {
+
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private Label firstNameLabel;
+    @FXML
+    private Label secondNameLabel;
+    @FXML
+    private Label firstSurnameLabel;
+    @FXML
+    private Label secondSurnameLabel;
+    @FXML
+    private Label countryLabel;
+    @FXML
+    private Label birthdayLabel;
+    @FXML
+    private ImageView pictureImage;
+
+    private Stage dialogStage;
+    private int userId;
+
+<span class="nc" id="L42">    public UserDetailsDialogController() {</span>
+<span class="nc" id="L43">    }</span>
+
+    public void setDialogStage(final Stage dialogStage) {
+<span class="nc" id="L46">        this.dialogStage = dialogStage;</span>
+<span class="nc" id="L47">    }</span>
+
+    public void setUserId(final int userId) {
+<span class="nc" id="L50">        this.userId = userId;</span>
+<span class="nc" id="L51">        loadDetails();</span>
+<span class="nc" id="L52">    }</span>
+
+    @Override
+    protected void onInitialize() {
+<span class="nc" id="L56">    }</span>
+
+    @FXML
+    private void handleClose() {
+<span class="nc" id="L60">        dialogStage.close();</span>
+<span class="nc" id="L61">    }</span>
+
+    private void loadDetails() {
+<span class="nc" id="L64">        User user = BusinessLogicLocator.getInstance().getUserBusinessLogic().getUser(userId);</span>
+<span class="nc" id="L65">        String imagePath = Constants.USER_PROFILE;</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">        if (user.getPicturePath() != null &amp;&amp; !user.getPicturePath().isEmpty()) {</span>
+<span class="nc" id="L67">            File file = new File(user.getPicturePath());</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            imagePath = file.exists() ? file.toURI().toString() : Constants.USER_PROFILE;</span>
+        }
+<span class="nc" id="L70">        pictureImage.setImage(new Image(imagePath));</span>
+<span class="nc" id="L71">        usernameLabel.setText(user.getUsername());</span>
+<span class="nc" id="L72">        firstNameLabel.setText(user.getFirstName());</span>
+<span class="nc" id="L73">        secondNameLabel.setText(user.getSecondName());</span>
+<span class="nc" id="L74">        firstSurnameLabel.setText(user.getFirstSurname());</span>
+<span class="nc" id="L75">        secondSurnameLabel.setText(user.getSecondSurname());</span>
+<span class="nc" id="L76">        countryLabel.setText(user.getCountry());</span>
+<span class="nc" id="L77">        birthdayLabel.setText(</span>
+<span class="nc" id="L78">                DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(user.getBirthday()));</span>
+
+<span class="nc" id="L80">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AttachmentsController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.ui.controller</a> &gt; <span class="el_source">AttachmentsController.java</span></div><h1>AttachmentsController.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.ui.controller;
+
+import com.mytree.business.logic.AttachmentBusinessLogic;
+import com.mytree.business.logic.BusinessLogicLocator;
+import com.mytree.business.logic.UserBusinessLogic;
+import com.mytree.business.model.Attachment;
+import com.mytree.utils.Constants;
+import com.mytree.utils.StringUtils;
+import java.text.DateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+
+
+public final class AttachmentsController extends BaseController {
+
+    @FXML
+    private TableView&lt;Attachment&gt; attachmentTable;
+    @FXML
+    private TableColumn&lt;Attachment, String&gt; nameColumn;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label ownerLabel;
+    @FXML
+    private Label dateLabel;
+    //////////
+    @FXML
+    private Label attachmentPath;
+    @FXML
+    private TextArea historyTextArea;
+    @FXML
+    private Button newAttachmentButton;
+    ///////////
+
+    private int userId;
+
+<span class="nc" id="L54">    public AttachmentsController() {</span>
+<span class="nc" id="L55">        this.userId = -1;</span>
+<span class="nc" id="L56">    }</span>
+
+    public void setUserId(final int userId) {
+<span class="nc" id="L59">        this.userId = userId;</span>
+<span class="nc" id="L60">        reload();</span>
+<span class="nc" id="L61">    }</span>
+
+    @Override
+    protected void onInitialize() {
+<span class="nc" id="L65">        historyTextArea.setEditable(false);</span>
+<span class="nc" id="L66">        nameColumn.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc" id="L67">            return new SimpleStringProperty(cellData.getValue().getName());</span>
+        });
+<span class="nc" id="L69">        attachmentTable.getSelectionModel().selectedItemProperty()</span>
+<span class="nc" id="L70">                .addListener((observable, oldValue, newValue)</span>
+<span class="nc" id="L71">                        -&gt; showAttachmentDetails(newValue));</span>
+<span class="nc" id="L72">        showAttachmentDetails(null);</span>
+<span class="nc" id="L73">        reload();</span>
+<span class="nc" id="L74">    }</span>
+
+    @FXML
+    private void handleNewAttachment() {
+<span class="nc" id="L78">        getNavigationManager().showAttachmentDialog();</span>
+<span class="nc" id="L79">        reload();</span>
+<span class="nc" id="L80">    }</span>
+
+    @FXML
+    private void handleOpenAttachment() {
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (!attachmentPath.getText().isEmpty()) {</span>
+<span class="nc" id="L85">            getNavigationManager().openDocument(attachmentPath.getText());</span>
+        }
+<span class="nc" id="L87">    }</span>
+
+    private void reload() {
+<span class="nc" id="L90">        ObservableList&lt;Attachment&gt; attachments = FXCollections.observableArrayList();</span>
+<span class="nc" id="L91">        getAttachments().forEach((attachment) -&gt; {</span>
+<span class="nc" id="L92">            attachments.add(attachment);</span>
+<span class="nc" id="L93">        });</span>
+<span class="nc" id="L94">        attachmentTable.setItems(attachments);</span>
+<span class="nc" id="L95">        attachmentTable.refresh();</span>
+<span class="nc" id="L96">        BusinessLogicLocator locator = BusinessLogicLocator.getInstance();</span>
+<span class="nc" id="L97">        boolean disabled = locator.getUserBusinessLogic().getUsers(true).isEmpty();</span>
+<span class="nc" id="L98">        newAttachmentButton.setDisable(disabled);</span>
+
+<span class="nc" id="L100">    }</span>
+
+    private Collection&lt;Attachment&gt; getAttachments() {
+<span class="nc" id="L103">        BusinessLogicLocator locator = BusinessLogicLocator.getInstance();</span>
+<span class="nc" id="L104">        AttachmentBusinessLogic logic = locator.getAttachmentBusinessLogic();</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        return userId &gt; -1 ? logic.getAttachments(userId) : logic.getAttachments();</span>
+    }
+
+    private void showAttachmentDetails(final Attachment attachment) {
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (attachment != null) {</span>
+<span class="nc" id="L110">            Locale locale = Locale.getDefault();</span>
+<span class="nc" id="L111">            DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, locale);</span>
+<span class="nc" id="L112">            Date from = attachment.getFromDate();</span>
+<span class="nc" id="L113">            Date to = attachment.getToDate();</span>
+<span class="nc" id="L114">            StringBuilder dateBuilder = new StringBuilder();</span>
+<span class="nc" id="L115">            dateBuilder.append(df.format(from));</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            if (to.compareTo(from) &gt; 0) {</span>
+<span class="nc" id="L117">                dateBuilder.append(&quot; hasta &quot;);</span>
+<span class="nc" id="L118">                dateBuilder.append(df.format(to));</span>
+            }
+<span class="nc" id="L120">            dateLabel.setText(dateBuilder.toString());</span>
+<span class="nc" id="L121">            nameLabel.setText(attachment.getName());</span>
+<span class="nc" id="L122">            ownerLabel.setText(getOwners(attachment));</span>
+<span class="nc" id="L123">            attachmentPath.setText(attachment.getAttachmentPath());</span>
+<span class="nc" id="L124">            historyTextArea.setText(attachment.getHistory());</span>
+<span class="nc" id="L125">        } else {</span>
+<span class="nc" id="L126">            dateLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L127">            nameLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L128">            ownerLabel.setText(&quot;&quot;);</span>
+<span class="nc" id="L129">            attachmentPath.setText(&quot;&quot;);</span>
+<span class="nc" id="L130">            historyTextArea.setText(&quot;&quot;);</span>
+        }
+<span class="nc" id="L132">    }</span>
+
+    private String getOwners(final Attachment attachment) {
+<span class="nc" id="L135">        String owners = Constants.FAMILY;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        if (!attachment.isFamilyOwner()) {</span>
+<span class="nc" id="L137">            String token = &quot;#COMMA#&quot;;</span>
+<span class="nc" id="L138">            StringBuilder ownersBuilder = new StringBuilder();</span>
+<span class="nc" id="L139">            BusinessLogicLocator locator = BusinessLogicLocator.getInstance();</span>
+<span class="nc" id="L140">            UserBusinessLogic logic = locator.getUserBusinessLogic();</span>
+<span class="nc" id="L141">            List&lt;Integer&gt; ownersIds = attachment.getOwners();</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            for (Iterator&lt;Integer&gt; iterator = ownersIds.iterator(); iterator.hasNext();) {</span>
+<span class="nc" id="L143">                Integer ownerId = iterator.next();</span>
+<span class="nc" id="L144">                ownersBuilder.append(logic.getUser(ownerId).getFullName());</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                if (iterator.hasNext()) {</span>
+<span class="nc" id="L146">                    ownersBuilder.append(token);</span>
+                }
+<span class="nc" id="L148">            }</span>
+<span class="nc" id="L149">            owners = ownersBuilder.toString();</span>
+<span class="nc" id="L150">            owners = StringUtils.replaceLast(owners, token, &quot; y &quot;);</span>
+<span class="nc" id="L151">            owners = owners.replaceAll(token, &quot;, &quot;);</span>
+        }
+<span class="nc" id="L153">        return owners;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

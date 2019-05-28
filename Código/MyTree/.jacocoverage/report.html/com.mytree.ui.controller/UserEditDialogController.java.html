@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserEditDialogController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.ui.controller</a> &gt; <span class="el_source">UserEditDialogController.java</span></div><h1>UserEditDialogController.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.ui.controller;
+
+import com.mytree.business.logic.BusinessLogicLocator;
+import com.mytree.business.model.User;
+import com.mytree.ui.model.UserModel;
+import com.mytree.utils.Constants;
+import java.io.File;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+public final class UserEditDialogController
+        extends BaseController {
+
+    @FXML
+    private Label picturePathLabel;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField secondNameField;
+    @FXML
+    private TextField firstSurnameField;
+    @FXML
+    private TextField secondSurnameField;
+    @FXML
+    private TextField countryField;
+    @FXML
+    private DatePicker birthdayField;
+    @FXML
+    private Button cancelButton;
+
+    private Stage dialogStage;
+    private FileChooser fileChooser;
+    private UserModel userModel;
+
+<span class="nc" id="L52">    public UserEditDialogController() {</span>
+<span class="nc" id="L53">    }</span>
+
+    public void setDialogStage(final Stage dialogStage) {
+<span class="nc" id="L56">        this.dialogStage = dialogStage;</span>
+<span class="nc" id="L57">    }</span>
+
+    public void setUser(final UserModel userModel) {
+<span class="nc" id="L60">        this.userModel = userModel;</span>
+<span class="nc" id="L61">        usernameField.setText(userModel.getUsername().getValue());</span>
+<span class="nc" id="L62">        firstNameField.setText(userModel.getFirstName().getValue());</span>
+<span class="nc" id="L63">        secondNameField.setText(userModel.getSecondName().getValue());</span>
+<span class="nc" id="L64">        firstSurnameField.setText(userModel.getFirstSurname().getValue());</span>
+<span class="nc" id="L65">        secondSurnameField.setText(userModel.getSecondSurname().getValue());</span>
+<span class="nc" id="L66">        picturePathLabel.setText(userModel.getPicturePath().getValue());</span>
+<span class="nc" id="L67">        countryField.setText(userModel.getCountry().getValue());</span>
+<span class="nc" id="L68">        birthdayField.setValue(LocalDate.from(</span>
+<span class="nc" id="L69">                Instant.ofEpochMilli(userModel.getBirthday().getValue().getTime()).atZone(ZoneId.systemDefault())));</span>
+<span class="nc" id="L70">    }</span>
+
+    public void allowCancel(final boolean allow) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        cancelButton.setDisable(!allow);</span>
+<span class="nc" id="L74">    }</span>
+
+    @Override
+    protected void onInitialize() {
+<span class="nc" id="L78">        fileChooser = new FileChooser();</span>
+<span class="nc" id="L79">        FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter(&quot;JPG files (*.jpg)&quot;, &quot;*.JPG&quot;);</span>
+<span class="nc" id="L80">        FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter(&quot;PNG files (*.png)&quot;, &quot;*.PNG&quot;);</span>
+<span class="nc" id="L81">        fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);</span>
+<span class="nc" id="L82">    }</span>
+
+    @FXML
+    private void handleSave() {
+<span class="nc" id="L86">        User user = new User();</span>
+<span class="nc" id="L87">        user.setId(userModel.getId().getValue());</span>
+<span class="nc" id="L88">        user.setUsername(usernameField.getText());</span>
+<span class="nc" id="L89">        user.setFirstName(firstNameField.getText());</span>
+<span class="nc" id="L90">        user.setSecondName(secondNameField.getText());</span>
+<span class="nc" id="L91">        user.setFirstSurname(firstSurnameField.getText());</span>
+<span class="nc" id="L92">        user.setSecondSurname(secondSurnameField.getText());</span>
+<span class="nc" id="L93">        user.setPicturePath(picturePathLabel.getText());</span>
+<span class="nc" id="L94">        user.setCountry(countryField.getText());</span>
+<span class="nc" id="L95">        user.setBirthday(Date.from(Instant.from(birthdayField.getValue().atStartOfDay(ZoneId.systemDefault()))));</span>
+        // Make validations
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (validateUser(user)) {</span>
+<span class="nc" id="L98">            BusinessLogicLocator.getInstance().getUserBusinessLogic().save(user);</span>
+<span class="nc" id="L99">            dialogStage.close();</span>
+        }
+<span class="nc" id="L101">    }</span>
+
+    @FXML
+    private void handleCancel() {
+<span class="nc" id="L105">        dialogStage.close();</span>
+<span class="nc" id="L106">    }</span>
+
+    @FXML
+    private void handleSelectPicture() {
+<span class="nc" id="L110">        File file = fileChooser.showOpenDialog(dialogStage);</span>
+<span class="nc" id="L111">        picturePathLabel.setText(file.getAbsolutePath());</span>
+<span class="nc" id="L112">    }</span>
+
+    private boolean validateUser(final User user) {
+
+        // Validate fields
+<span class="nc" id="L117">        StringBuilder resultBuilder = new StringBuilder();</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (user.getUsername().trim().isEmpty()) {</span>
+<span class="nc" id="L119">            resultBuilder.append(Constants.USERNAME_REQUIRED);</span>
+        }
+
+        // Present error
+<span class="nc" id="L123">        String result = resultBuilder.toString();</span>
+<span class="nc" id="L124">        boolean isValidUser = result.isEmpty();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (!isValidUser) {</span>
+<span class="nc" id="L126">            getNavigationManager().showAlert(AlertType.ERROR, Constants.USER_ERROR, Constants.ADD_USER_ERROR, result);</span>
+        }
+<span class="nc" id="L128">        return isValidUser;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserRelationshipDialogController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.ui.controller</a> &gt; <span class="el_source">UserRelationshipDialogController.java</span></div><h1>UserRelationshipDialogController.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.ui.controller;
+
+import com.mytree.business.logic.BusinessLogicLocator;
+import com.mytree.business.model.Relationship;
+import com.mytree.business.model.User;
+import com.mytree.business.model.UserRelationship;
+import com.mytree.ui.model.UserModel;
+import com.mytree.utils.Constants;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+public final class UserRelationshipDialogController extends BaseController {
+
+    @FXML
+    private Label thirdFieldLabel;
+    @FXML
+    private Label fromFieldLabel;
+    @FXML
+    private Label toFieldLabel;
+    @FXML
+    private ComboBox userComboBox;
+    @FXML
+    private ComboBox relationshipTypeComboBox;
+    @FXML
+    private ComboBox thirdFieldComboBox;
+    @FXML
+    private DatePicker fromDatePicker;
+    @FXML
+    private DatePicker toDatePicker;
+    @FXML
+    private CheckBox currentRelationshipCheckbox;
+
+    private Stage dialogStage;
+
+<span class="nc" id="L53">    public UserRelationshipDialogController() {</span>
+<span class="nc" id="L54">    }</span>
+
+    @Override
+    protected void onInitialize() {
+<span class="nc" id="L58">        reload();</span>
+<span class="nc" id="L59">    }</span>
+
+    public void setDialogStage(final Stage dialogStage) {
+<span class="nc" id="L62">        this.dialogStage = dialogStage;</span>
+<span class="nc" id="L63">    }</span>
+
+    @FXML
+    private void handleUserComboBoxSelection() {
+<span class="nc" id="L67">        List&lt;User&gt; excludedUsers = new ArrayList&lt;User&gt;();</span>
+<span class="nc" id="L68">        excludedUsers.add((User) userComboBox.getValue());</span>
+<span class="nc" id="L69">        thirdFieldComboBox.setItems(getUsers(excludedUsers));</span>
+<span class="nc" id="L70">        thirdFieldComboBox.getSelectionModel().selectFirst();</span>
+<span class="nc" id="L71">    }</span>
+
+    @FXML
+    private void handleRelationshipTypeComboBoxSelection() {
+<span class="nc" id="L75">        updateFormContent();</span>
+<span class="nc" id="L76">    }</span>
+
+    @FXML
+    private void handleCurrentRelationshipCheckbox() {
+<span class="nc" id="L80">        updateFormContent();</span>
+<span class="nc" id="L81">    }</span>
+
+    @FXML
+    private void handleAddUser() {
+<span class="nc" id="L85">        getNavigationManager().showUserEditDialog(new UserModel(new User()), true);</span>
+<span class="nc" id="L86">        handleUserComboBoxSelection();</span>
+<span class="nc" id="L87">        thirdFieldComboBox.getSelectionModel().selectLast();</span>
+<span class="nc" id="L88">    }</span>
+
+    @FXML
+    private void handleSave() {
+<span class="nc" id="L92">        String relationship = (String) relationshipTypeComboBox.getValue();</span>
+<span class="nc" id="L93">        User of = (User) userComboBox.getValue();</span>
+<span class="nc" id="L94">        User with = (User) thirdFieldComboBox.getValue();</span>
+<span class="nc" id="L95">        Date from = Date.from(Instant.from(fromDatePicker.getValue().atStartOfDay(ZoneId.systemDefault())));</span>
+<span class="nc" id="L96">        Date to = Date.from(Instant.from(toDatePicker.getValue().atStartOfDay(ZoneId.systemDefault())));</span>
+<span class="nc" id="L97">        boolean currentRelationship = currentRelationshipCheckbox.isSelected();</span>
+
+        // Create user relationship
+<span class="nc" id="L100">        UserRelationship userRelationship = new UserRelationship();</span>
+<span class="nc" id="L101">        userRelationship.setRelationship(Relationship.getRelationship(relationship));</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        userRelationship.setRelationshipOf(of != null ? of.getId() : -1);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        userRelationship.setRelationshipWith(with != null ? with.getId() : -1);</span>
+<span class="nc" id="L104">        userRelationship.setFromDate(from);</span>
+<span class="nc" id="L105">        userRelationship.setToDate(to);</span>
+<span class="nc" id="L106">        userRelationship.setCurrentRelationship(currentRelationship);</span>
+
+        // Save it
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        if (validateUserRelationship(userRelationship)) {</span>
+<span class="nc" id="L110">            BusinessLogicLocator.getInstance().getUserRelationshipBusinessLogic().save(userRelationship);</span>
+<span class="nc" id="L111">            dialogStage.close();</span>
+        }
+
+<span class="nc" id="L114">    }</span>
+
+    @FXML
+    private void handleCancel() {
+<span class="nc" id="L118">        dialogStage.close();</span>
+<span class="nc" id="L119">    }</span>
+
+    @FXML
+    private void handleDatePicker() {
+<span class="nc" id="L123">        LocalDate from = fromDatePicker.getValue();</span>
+<span class="nc" id="L124">        LocalDate to = toDatePicker.getValue();</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (from.compareTo(to) &gt; 0) {</span>
+<span class="nc" id="L126">            toDatePicker.setValue(from);</span>
+        }
+<span class="nc" id="L128">    }</span>
+
+    private void reload() {
+<span class="nc" id="L131">        userComboBox.setItems(getUsers(null));</span>
+<span class="nc" id="L132">        userComboBox.getSelectionModel().selectFirst();</span>
+
+<span class="nc" id="L134">        relationshipTypeComboBox.getItems().addAll(Constants.FATHER, </span>
+                Constants.MOTHER, Constants.CHILD, 
+                Constants.MARRIED, Constants.UNION);
+<span class="nc" id="L137">        relationshipTypeComboBox.getSelectionModel().selectFirst();</span>
+
+<span class="nc" id="L139">        LocalDate currentDate = LocalDate.from(</span>
+<span class="nc" id="L140">                Instant.ofEpochMilli(new Date().getTime()).atZone(ZoneId.systemDefault()));</span>
+<span class="nc" id="L141">        toDatePicker.setValue(currentDate);</span>
+<span class="nc" id="L142">        fromDatePicker.setValue(currentDate);</span>
+
+<span class="nc" id="L144">        handleUserComboBoxSelection();</span>
+<span class="nc" id="L145">        updateFormContent();</span>
+<span class="nc" id="L146">    }</span>
+
+    private ObservableList&lt;User&gt; getUsers(final List&lt;User&gt; excludedUsers) {
+<span class="nc" id="L149">        ObservableList&lt;User&gt; users = FXCollections.observableArrayList();</span>
+<span class="nc" id="L150">        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(true).forEach((user) -&gt; {</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">            if (excludedUsers == null || !excludedUsers.contains(user)) {</span>
+<span class="nc" id="L152">                users.add(user);</span>
+            }
+<span class="nc" id="L154">        });</span>
+<span class="nc" id="L155">        return users;</span>
+    }
+
+    private void updateFormContent() {
+<span class="nc" id="L159">        String relationType = (String) relationshipTypeComboBox.getValue();</span>
+<span class="nc bnc" id="L160" title="All 4 branches missed.">        boolean isConjugate = relationType.equals(Constants.MARRIED) || relationType.equals(Constants.UNION);</span>
+<span class="nc bnc" id="L161" title="All 4 branches missed.">        boolean mustShowToFields = isConjugate &amp;&amp; !currentRelationshipCheckbox.isSelected();</span>
+<span class="nc" id="L162">        thirdFieldLabel.setText(relationType);</span>
+<span class="nc" id="L163">        fromFieldLabel.setVisible(isConjugate);</span>
+<span class="nc" id="L164">        fromDatePicker.setVisible(isConjugate);</span>
+<span class="nc" id="L165">        toFieldLabel.setVisible(mustShowToFields);</span>
+<span class="nc" id="L166">        toDatePicker.setVisible(mustShowToFields);</span>
+<span class="nc" id="L167">        currentRelationshipCheckbox.setVisible(isConjugate);</span>
+<span class="nc" id="L168">    }</span>
+
+    private boolean validateUserRelationship(final UserRelationship userRelationship) {
+
+        // Validate fields
+<span class="nc" id="L173">        StringBuilder resultBuilder = new StringBuilder();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (userRelationship.getRelationshipOf() == -1</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                || userRelationship.getRelationshipWith() == -1) {</span>
+<span class="nc" id="L176">            resultBuilder.append(Constants.RELATIONSHIP_MUST_BE_DEFINED);</span>
+        }
+
+        // Present error
+<span class="nc" id="L180">        String result = resultBuilder.toString();</span>
+<span class="nc" id="L181">        boolean isValidUserRelationship = result.isEmpty();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        if (!isValidUserRelationship) {</span>
+<span class="nc" id="L183">            getNavigationManager().showAlert(AlertType.ERROR, Constants.USER_RELATIONSHIP_ERROR, </span>
+                    Constants.ADD_USER_RELATIONSHIP_ERROR, result);
+        }
+<span class="nc" id="L186">        return isValidUserRelationship;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

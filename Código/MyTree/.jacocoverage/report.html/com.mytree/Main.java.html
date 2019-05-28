@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree;
+
+import com.mytree.assembler.Assembler;
+import com.mytree.business.model.User;
+import com.mytree.ui.controller.AttachmentDialogController;
+import com.mytree.ui.controller.AttachmentsController;
+import com.mytree.ui.controller.RootLayoutController;
+import com.mytree.ui.controller.TextualTreeController;
+import com.mytree.ui.controller.TreeController;
+import com.mytree.ui.controller.UserDetailsDialogController;
+import com.mytree.ui.controller.UserEditDialogController;
+import com.mytree.ui.controller.UserRelationshipDialogController;
+import com.mytree.ui.controller.UsersController;
+import com.mytree.ui.model.UserModel;
+import com.mytree.utils.Constants;
+import java.io.File;
+import java.io.IOException;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+<span class="nc" id="L33">public final class Main</span>
+        extends Application
+        implements NavigationManager {
+
+    private Stage primaryStage;
+    private BorderPane rootLayout;
+
+    public static void main(final String[] args) {
+<span class="nc" id="L41">        Assembler.getInstance().assemble();</span>
+<span class="nc" id="L42">        launch(args);</span>
+<span class="nc" id="L43">    }</span>
+
+    @Override
+    public void start(final Stage primaryStage) {
+<span class="nc" id="L47">        this.primaryStage = primaryStage;</span>
+<span class="nc" id="L48">        primaryStage.setTitle(Constants.APP_TITLE);</span>
+
+<span class="nc" id="L50">        showUserEditDialog(new UserModel(new User()), false);</span>
+<span class="nc" id="L51">        initRootLayout();</span>
+<span class="nc" id="L52">        showTree();</span>
+<span class="nc" id="L53">    }</span>
+
+    public void initRootLayout() {
+        try {
+<span class="nc" id="L57">            FXMLLoader loader = resourceLoader(&quot;ui/view/RootLayout.fxml&quot;);</span>
+<span class="nc" id="L58">            rootLayout = (BorderPane) loader.load();</span>
+
+<span class="nc" id="L60">            RootLayoutController controller = loader.getController();</span>
+<span class="nc" id="L61">            controller.setNavigationManager(this);</span>
+
+            // Show the scene containing the root layout.
+<span class="nc" id="L64">            Scene scene = new Scene(rootLayout);</span>
+<span class="nc" id="L65">            primaryStage.setScene(scene);</span>
+<span class="nc" id="L66">            primaryStage.setMaximized(true);</span>
+<span class="nc" id="L67">            primaryStage.setResizable(false);</span>
+<span class="nc" id="L68">            primaryStage.show();</span>
+
+<span class="nc" id="L70">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L72">        }</span>
+<span class="nc" id="L73">    }</span>
+
+    @Override
+    public void showUsers() {
+        try {
+<span class="nc" id="L78">            FXMLLoader loader = resourceLoader(&quot;ui/view/Users.fxml&quot;);</span>
+<span class="nc" id="L79">            AnchorPane users = (AnchorPane) loader.load();</span>
+
+            // Set users into the center of root layout.
+<span class="nc" id="L82">            rootLayout.setCenter(users);</span>
+
+            // Give the controller access to the main app.
+<span class="nc" id="L85">            UsersController controller = loader.getController();</span>
+<span class="nc" id="L86">            controller.setNavigationManager(this);</span>
+
+<span class="nc" id="L88">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L90">        }</span>
+<span class="nc" id="L91">    }</span>
+
+    @Override
+    public void showTree() {
+        try {
+<span class="nc" id="L96">            FXMLLoader loader = resourceLoader(&quot;ui/view/Tree.fxml&quot;);</span>
+<span class="nc" id="L97">            BorderPane tree = (BorderPane) loader.load();</span>
+
+            // Set users into the center of root layout.
+<span class="nc" id="L100">            rootLayout.setCenter(tree);</span>
+
+            // Give the controller access to the main app.
+<span class="nc" id="L103">            TreeController controller = loader.getController();</span>
+<span class="nc" id="L104">            controller.setNavigationManager(this);</span>
+
+<span class="nc" id="L106">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L108">        }</span>
+<span class="nc" id="L109">    }</span>
+
+    @Override
+    public void showTextualTree() {
+        try {
+<span class="nc" id="L114">            FXMLLoader loader = resourceLoader(&quot;ui/view/TextualTree.fxml&quot;);</span>
+<span class="nc" id="L115">            BorderPane tree = (BorderPane) loader.load();</span>
+
+            // Set users into the center of root layout.
+<span class="nc" id="L118">            rootLayout.setCenter(tree);</span>
+
+            // Give the controller access to the main app.
+<span class="nc" id="L121">            TextualTreeController controller = loader.getController();</span>
+<span class="nc" id="L122">            controller.setNavigationManager(this);</span>
+
+<span class="nc" id="L124">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L126">        }</span>
+<span class="nc" id="L127">    }</span>
+
+    @Override
+    public void showAttachments() {
+        try {
+<span class="nc" id="L132">            FXMLLoader loader = resourceLoader(&quot;ui/view/Attachments.fxml&quot;);</span>
+<span class="nc" id="L133">            AnchorPane tree = (AnchorPane) loader.load();</span>
+
+            // Set users into the center of root layout.
+<span class="nc" id="L136">            rootLayout.setCenter(tree);</span>
+
+            // Give the controller access to the main app.
+<span class="nc" id="L139">            AttachmentsController controller = loader.getController();</span>
+<span class="nc" id="L140">            controller.setNavigationManager(this);</span>
+
+<span class="nc" id="L142">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L144">        }</span>
+<span class="nc" id="L145">    }</span>
+
+    @Override
+    public void showUserEditDialog(final UserModel userModel, final boolean allowCancel) {
+        try {
+<span class="nc" id="L150">            FXMLLoader loader = resourceLoader(&quot;ui/view/UserEditDialog.fxml&quot;);</span>
+<span class="nc" id="L151">            AnchorPane page = (AnchorPane) loader.load();</span>
+
+            // Create the dialog Stage.
+<span class="nc bnc" id="L154" title="All 2 branches missed.">            String title = userModel.isNew() ? Constants.NEW_USER : Constants.EDIT_USER;</span>
+<span class="nc" id="L155">            Stage dialogStage = new Stage();</span>
+<span class="nc" id="L156">            dialogStage.setTitle(title);</span>
+<span class="nc" id="L157">            dialogStage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L158">            dialogStage.initOwner(primaryStage);</span>
+<span class="nc" id="L159">            dialogStage.setResizable(false);</span>
+<span class="nc" id="L160">            dialogStage.setScene(new Scene(page));</span>
+
+            // Set the user into the controller.
+<span class="nc" id="L163">            UserEditDialogController controller = loader.getController();</span>
+<span class="nc" id="L164">            controller.setNavigationManager(this);</span>
+<span class="nc" id="L165">            controller.setDialogStage(dialogStage);</span>
+<span class="nc" id="L166">            controller.setUser(userModel);</span>
+<span class="nc" id="L167">            controller.allowCancel(allowCancel);</span>
+
+            // Show the dialog and wait until the user closes it
+<span class="nc" id="L170">            dialogStage.showAndWait();</span>
+
+<span class="nc" id="L172">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L174">        }</span>
+<span class="nc" id="L175">    }</span>
+
+    @Override
+    public void showUserRelationshipDialog() {
+        try {
+<span class="nc" id="L180">            FXMLLoader loader = resourceLoader(&quot;ui/view/UserRelationshipDialog.fxml&quot;);</span>
+<span class="nc" id="L181">            AnchorPane page = (AnchorPane) loader.load();</span>
+
+            // Create the dialog Stage.
+<span class="nc" id="L184">            String title = Constants.NEW_USER_RELATIONSHIP;</span>
+<span class="nc" id="L185">            Stage dialogStage = new Stage();</span>
+<span class="nc" id="L186">            dialogStage.setTitle(title);</span>
+<span class="nc" id="L187">            dialogStage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L188">            dialogStage.initOwner(primaryStage);</span>
+<span class="nc" id="L189">            dialogStage.setResizable(false);</span>
+<span class="nc" id="L190">            dialogStage.setScene(new Scene(page));</span>
+
+            // Set the user into the controller.
+<span class="nc" id="L193">            UserRelationshipDialogController controller = loader.getController();</span>
+<span class="nc" id="L194">            controller.setNavigationManager(this);</span>
+<span class="nc" id="L195">            controller.setDialogStage(dialogStage);</span>
+
+            // Show the dialog and wait until the user closes it
+<span class="nc" id="L198">            dialogStage.showAndWait();</span>
+
+<span class="nc" id="L200">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L202">        }</span>
+<span class="nc" id="L203">    }</span>
+
+    @Override
+    public void showAttachmentDialog() {
+        try {
+<span class="nc" id="L208">            FXMLLoader loader = resourceLoader(&quot;ui/view/AttachmentDialog.fxml&quot;);</span>
+<span class="nc" id="L209">            AnchorPane page = (AnchorPane) loader.load();</span>
+
+            // Create the dialog Stage.
+<span class="nc" id="L212">            String title = Constants.NEW_ATTACHMENT;</span>
+<span class="nc" id="L213">            Stage dialogStage = new Stage();</span>
+<span class="nc" id="L214">            dialogStage.setTitle(title);</span>
+<span class="nc" id="L215">            dialogStage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L216">            dialogStage.initOwner(primaryStage);</span>
+<span class="nc" id="L217">            dialogStage.setResizable(false);</span>
+<span class="nc" id="L218">            dialogStage.setScene(new Scene(page));</span>
+
+            // Set the user into the controller.
+<span class="nc" id="L221">            AttachmentDialogController controller = loader.getController();</span>
+<span class="nc" id="L222">            controller.setNavigationManager(this);</span>
+<span class="nc" id="L223">            controller.setDialogStage(dialogStage);</span>
+
+            // Show the dialog and wait until the user closes it
+<span class="nc" id="L226">            dialogStage.showAndWait();</span>
+
+<span class="nc" id="L228">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L230">        }</span>
+<span class="nc" id="L231">    }</span>
+
+    @Override
+    public void showUserDetails(final int userId) {
+        try {
+<span class="nc" id="L236">            FXMLLoader loader = resourceLoader(&quot;ui/view/UserDetailsDialog.fxml&quot;);</span>
+<span class="nc" id="L237">            AnchorPane page = (AnchorPane) loader.load();</span>
+
+            // Create the dialog Stage.
+<span class="nc" id="L240">            String title = Constants.USER_DETAILS;</span>
+<span class="nc" id="L241">            Stage dialogStage = new Stage();</span>
+<span class="nc" id="L242">            dialogStage.setTitle(title);</span>
+<span class="nc" id="L243">            dialogStage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L244">            dialogStage.initOwner(primaryStage);</span>
+<span class="nc" id="L245">            dialogStage.setResizable(false);</span>
+<span class="nc" id="L246">            dialogStage.setScene(new Scene(page));</span>
+
+<span class="nc" id="L248">            UserDetailsDialogController controller = loader.getController();</span>
+<span class="nc" id="L249">            controller.setNavigationManager(this);</span>
+<span class="nc" id="L250">            controller.setUserId(userId);</span>
+<span class="nc" id="L251">            controller.setDialogStage(dialogStage);</span>
+
+            // Show the dialog and wait until the user closes it
+<span class="nc" id="L254">            dialogStage.showAndWait();</span>
+
+<span class="nc" id="L256">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L258">        }</span>
+<span class="nc" id="L259">    }</span>
+
+    @Override
+    public void showUserAttachmentsDialog(final int userId) {
+        try {
+<span class="nc" id="L264">            FXMLLoader loader = resourceLoader(&quot;ui/view/Attachments.fxml&quot;);</span>
+<span class="nc" id="L265">            AnchorPane attachments = (AnchorPane) loader.load();</span>
+
+            // Create the dialog Stage.
+<span class="nc" id="L268">            String title = Constants.ATTACHMENTS;</span>
+<span class="nc" id="L269">            Stage dialogStage = new Stage();</span>
+<span class="nc" id="L270">            dialogStage.setTitle(title);</span>
+<span class="nc" id="L271">            dialogStage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L272">            dialogStage.initOwner(primaryStage);</span>
+<span class="nc" id="L273">            dialogStage.setResizable(false);</span>
+<span class="nc" id="L274">            dialogStage.setScene(new Scene(attachments));</span>
+
+            // Give the controller access to the main app.
+<span class="nc" id="L277">            AttachmentsController controller = loader.getController();</span>
+<span class="nc" id="L278">            controller.setNavigationManager(this);</span>
+<span class="nc" id="L279">            controller.setUserId(userId);</span>
+
+<span class="nc" id="L281">            dialogStage.showAndWait();</span>
+
+<span class="nc" id="L283">        } catch (IOException e) {</span>
+            // TODO: Present an error message
+<span class="nc" id="L285">        }</span>
+<span class="nc" id="L286">    }</span>
+
+    @Override
+    public void showAlert(final AlertType alertType, final String title, 
+            final String header, final String content) {
+<span class="nc" id="L291">        Alert alert = new Alert(alertType);</span>
+<span class="nc" id="L292">        alert.setTitle(title);</span>
+<span class="nc" id="L293">        alert.setHeaderText(header);</span>
+<span class="nc" id="L294">        alert.setContentText(content);</span>
+<span class="nc" id="L295">        alert.showAndWait();</span>
+<span class="nc" id="L296">    }</span>
+
+    @Override
+    public void openDocument(final String path) {
+<span class="nc" id="L300">        File document = new File(path);</span>
+<span class="nc bnc" id="L301" title="All 4 branches missed.">        if (document.exists() &amp;&amp; !document.isDirectory()) {</span>
+<span class="nc" id="L302">            getHostServices().showDocument(path);</span>
+        } else {
+<span class="nc" id="L304">            showAlert(AlertType.ERROR, Constants.APP_TITLE, Constants.DOCUMENT_ERROR, Constants.DOCUMENT_NOT_FOUND);</span>
+        }
+<span class="nc" id="L306">    }</span>
+
+    private FXMLLoader resourceLoader(final String path) throws IOException {
+<span class="nc" id="L309">        FXMLLoader loader = new FXMLLoader();</span>
+<span class="nc" id="L310">        loader.setLocation(Main.class.getResource(path));</span>
+<span class="nc" id="L311">        return loader;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

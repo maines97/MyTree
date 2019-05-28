@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserModel.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.ui.model</a> &gt; <span class="el_source">UserModel.java</span></div><h1>UserModel.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.ui.model;
+
+import com.mytree.business.model.User;
+import java.util.Date;
+import java.util.Objects;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+public final class UserModel {
+
+    private static final int HASH = 7;
+    private static final int HASH_RANDOM = 59;
+
+    private IntegerProperty id;
+    private StringProperty username;
+    private StringProperty firstName;
+    private StringProperty secondName;
+    private StringProperty firstSurname;
+    private StringProperty secondSurname;
+    private StringProperty picturePath;
+    private StringProperty country;
+    private ObjectProperty&lt;Date&gt; birthday;
+
+<span class="nc" id="L33">    public UserModel(final User user) {</span>
+<span class="nc" id="L34">        this.id = new SimpleIntegerProperty(user.getId());</span>
+<span class="nc" id="L35">        this.username = new SimpleStringProperty(user.getUsername());</span>
+<span class="nc" id="L36">        this.firstName = new SimpleStringProperty(user.getFirstName());</span>
+<span class="nc" id="L37">        this.secondName = new SimpleStringProperty(user.getSecondName());</span>
+<span class="nc" id="L38">        this.firstSurname = new SimpleStringProperty(user.getFirstSurname());</span>
+<span class="nc" id="L39">        this.secondSurname = new SimpleStringProperty(user.getSecondSurname());</span>
+<span class="nc" id="L40">        this.picturePath = new SimpleStringProperty(user.getPicturePath());</span>
+<span class="nc" id="L41">        this.country = new SimpleStringProperty(user.getCountry());</span>
+<span class="nc" id="L42">        this.birthday = new SimpleObjectProperty&lt;&gt;(user.getBirthday());</span>
+
+<span class="nc" id="L44">    }</span>
+
+    public IntegerProperty getId() {
+<span class="nc" id="L47">        return id;</span>
+    }
+
+    public void setId(final IntegerProperty id) {
+<span class="nc" id="L51">        this.id = id;</span>
+<span class="nc" id="L52">    }</span>
+
+    public StringProperty getUsername() {
+<span class="nc" id="L55">        return username;</span>
+    }
+
+    public void setUsername(final StringProperty username) {
+<span class="nc" id="L59">        this.username = username;</span>
+<span class="nc" id="L60">    }</span>
+
+    public StringProperty getFirstName() {
+<span class="nc" id="L63">        return firstName;</span>
+    }
+
+    public void setFirstName(final StringProperty firstName) {
+<span class="nc" id="L67">        this.firstName = firstName;</span>
+<span class="nc" id="L68">    }</span>
+
+    public StringProperty getSecondName() {
+<span class="nc" id="L71">        return secondName;</span>
+    }
+
+    public void setSecondName(final StringProperty secondName) {
+<span class="nc" id="L75">        this.secondName = secondName;</span>
+<span class="nc" id="L76">    }</span>
+
+    public StringProperty getFirstSurname() {
+<span class="nc" id="L79">        return firstSurname;</span>
+    }
+
+    public void setFirstSurname(final StringProperty firstSurname) {
+<span class="nc" id="L83">        this.firstSurname = firstSurname;</span>
+<span class="nc" id="L84">    }</span>
+
+    public StringProperty getSecondSurname() {
+<span class="nc" id="L87">        return secondSurname;</span>
+    }
+
+    public void setSecondSurname(final StringProperty secondSurname) {
+<span class="nc" id="L91">        this.secondSurname = secondSurname;</span>
+<span class="nc" id="L92">    }</span>
+
+    public StringProperty getPicturePath() {
+<span class="nc" id="L95">        return picturePath;</span>
+    }
+
+    public void setPicturePath(final StringProperty picturePath) {
+<span class="nc" id="L99">        this.picturePath = picturePath;</span>
+<span class="nc" id="L100">    }</span>
+
+    public StringProperty getCountry() {
+<span class="nc" id="L103">        return country;</span>
+    }
+
+    public void setCountry(final StringProperty country) {
+<span class="nc" id="L107">        this.country = country;</span>
+<span class="nc" id="L108">    }</span>
+
+    public ObjectProperty&lt;Date&gt; getBirthday() {
+<span class="nc" id="L111">        return birthday;</span>
+    }
+
+    public void setBirthday(final ObjectProperty&lt;Date&gt; birthday) {
+<span class="nc" id="L115">        this.birthday = birthday;</span>
+<span class="nc" id="L116">    }</span>
+
+    public boolean isNew() {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        return getId().getValue() == -1;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L124">        return firstSurname.getValue() + &quot; &quot; + secondSurname.getValue() + &quot;, &quot; + firstName.getValue();</span>
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+<span class="nc bnc" id="L129" title="All 4 branches missed.">        if (other == null || !(other instanceof UserModel)) {</span>
+<span class="nc" id="L130">            return false;</span>
+        }
+
+<span class="nc" id="L133">        UserModel otherUser = (UserModel) other;</span>
+<span class="nc" id="L134">        return id.getValue().equals(otherUser.getId().getValue());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L139">        int hash = HASH;</span>
+<span class="nc" id="L140">        hash = HASH_RANDOM * hash + Objects.hashCode(this.id);</span>
+<span class="nc" id="L141">        hash = HASH_RANDOM * hash + Objects.hashCode(this.username);</span>
+<span class="nc" id="L142">        return hash;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>UserRelationshipRepositoryImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.business.dataaccess.impl</a> &gt; <span class="el_source">UserRelationshipRepositoryImpl.java</span></div><h1>UserRelationshipRepositoryImpl.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.business.dataaccess.impl;
+
+import com.mytree.business.dataaccess.UserRelationshipRepository;
+import com.mytree.business.model.Relationship;
+import com.mytree.business.model.UserRelationship;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.io.Serializable;
+
+public final class UserRelationshipRepositoryImpl
+        extends RepositoryBase&lt;UserRelationship[][]&gt;
+        implements UserRelationshipRepository {
+
+    public UserRelationshipRepositoryImpl(final UserRelationship[][] dataSource) {
+<span class="fc" id="L21">        super(dataSource);</span>
+<span class="fc" id="L22">    }</span>
+
+    @Override
+    public void save(final UserRelationship entity) {
+<span class="fc" id="L26">        int of = entity.getRelationshipOf();</span>
+<span class="fc" id="L27">        int with = entity.getRelationshipWith();</span>
+
+<span class="fc" id="L29">        UserRelationship oppositeRelationship = new UserRelationship();</span>
+<span class="fc" id="L30">        oppositeRelationship.setRelationshipOf(with);</span>
+<span class="fc" id="L31">        oppositeRelationship.setRelationshipWith(of);</span>
+<span class="fc" id="L32">        oppositeRelationship.setFromDate(entity.getFromDate());</span>
+<span class="fc" id="L33">        oppositeRelationship.setToDate(entity.getToDate());</span>
+<span class="fc" id="L34">        oppositeRelationship.setRelationship(entity.getRelationship().getOpposite());</span>
+<span class="fc" id="L35">        oppositeRelationship.setCurrentRelationship(entity.isCurrentRelationship());</span>
+
+<span class="fc" id="L37">        getDataSource()[of][with] = entity;</span>
+<span class="fc" id="L38">        getDataSource()[with][of] = oppositeRelationship;</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public Collection&lt;UserRelationship&gt; getRealationships(final int id) {
+<span class="fc" id="L43">        List&lt;UserRelationship&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        for (UserRelationship userRelationship : getDataSource()[id]) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">            if (userRelationship != null) {</span>
+<span class="fc" id="L46">                result.add(userRelationship);</span>
+            }
+        }
+<span class="fc" id="L49">        return result;</span>
+    }
+
+    @Override
+    public Collection&lt;UserRelationship&gt; getRealationships(final List&lt;Relationship&gt; relationships) {
+<span class="fc" id="L54">        List&lt;UserRelationship&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (UserRelationship[] userRelationships : getDataSource()) {</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            for (UserRelationship userRelationship : userRelationships) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                if (userRelationship != null</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                        &amp;&amp; relationships.contains(userRelationship.getRelationship())) {</span>
+<span class="fc" id="L59">                    result.add(userRelationship);</span>
+                }
+            }
+        }
+<span class="fc" id="L63">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

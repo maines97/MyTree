@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+        <link rel="stylesheet" href="js/jquery/ui-lightness/jquery-ui-1.10.2.custom.css" />
+        <link href="css/primitives.latest.css" media="screen" rel="stylesheet" type="text/css" />
+        
+        <script type="text/javascript" src="js/jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery-ui-1.10.2.custom.min.js"></script>
+        <script type="text/javascript" src="js/primitives.min.js"></script>
+        <script type="text/javascript" >
+		
+            var options = new primitives.famdiagram.Config();
+            options.pageFitMode = primitives.common.PageFitMode.None;
+            options.cursorItem = 2;
+            options.linesWidth = 1;
+            options.linesColor = "black";
+            options.hasSelectorCheckbox = primitives.common.Enabled.False;
+            options.normalLevelShift = 20;
+            options.dotLevelShift = 20;
+            options.lineLevelShift = 20;
+            options.normalItemsInterval = 10;
+            options.dotItemsInterval = 10;
+            options.lineItemsInterval = 10;
+            options.arrowsDirection = primitives.common.GroupByType.Parents;
+            options.showExtraArrows = false;
+            options.graphicsType = primitives.common.GraphicsType.Canvas;
+            
+            jQuery(window).load(function () {
+                jQuery("#treeDiagram").css({ "width": $(window).width() + "px", "height": $(window).height() + "px" });               
+            });
+		
+            function reloadTree(items) {
+                options.items = JSON.parse(items);
+                jQuery("#treeDiagram").famDiagram(options);
+                jQuery("#treeDiagram").famDiagram("update", primitives.orgdiagram.UpdateMode.Recreate);
+            }
+
+        </script>
+    </head>
+    <body>
+        <div id="treeDiagram"></div>
+    </body>
+</html>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>TextualTreeController.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;MyTree&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">com.mytree.ui.controller</a> &gt; <span class="el_source">TextualTreeController.java</span></div><h1>TextualTreeController.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.mytree.ui.controller;
+
+import com.mytree.business.logic.BusinessLogicLocator;
+import com.mytree.business.logic.UserBusinessLogic;
+import com.mytree.business.model.User;
+import com.mytree.business.model.UserRelationship;
+import com.mytree.utils.Constants;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
+
+public final class TextualTreeController extends BaseController {
+
+    @FXML
+    private TreeTableView&lt;User&gt; userTreeTable;
+    @FXML
+    private TreeTableColumn&lt;User, String&gt; nameColumn;
+    @FXML
+    private TreeTableColumn&lt;User, Integer&gt; userDetailsLinkColumn;
+    @FXML
+    private TreeTableColumn&lt;User, Integer&gt; attachmentsLinkColumn;
+    @FXML
+    private ComboBox userComboBox;
+    @FXML
+    private CheckBox ascendingCkeckbox;
+
+<span class="nc" id="L44">    public TextualTreeController() {</span>
+<span class="nc" id="L45">    }</span>
+
+    @Override
+    protected void onInitialize() {
+<span class="nc" id="L49">        ObservableList&lt;User&gt; users = FXCollections.observableArrayList();</span>
+<span class="nc" id="L50">        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(false).forEach((user) -&gt; {</span>
+<span class="nc" id="L51">            users.add(user);</span>
+<span class="nc" id="L52">        });</span>
+<span class="nc" id="L53">        userComboBox.setItems(users);</span>
+<span class="nc" id="L54">        userComboBox.getSelectionModel().selectFirst();</span>
+<span class="nc" id="L55">        nameColumn.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc" id="L56">            return new SimpleStringProperty(cellData.getValue().getValue().toString());</span>
+        });
+<span class="nc" id="L58">        userDetailsLinkColumn.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc" id="L59">            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();</span>
+        });
+<span class="nc" id="L61">        userDetailsLinkColumn.setCellFactory(value -&gt; {</span>
+<span class="nc" id="L62">            return new LinkTreeTableCell&lt;&gt;(Constants.USER_DETAILS, (item) -&gt; {</span>
+<span class="nc" id="L63">                getNavigationManager().showUserDetails(item);</span>
+<span class="nc" id="L64">            });</span>
+        });
+<span class="nc" id="L66">        attachmentsLinkColumn.setCellValueFactory(cellData -&gt; {</span>
+<span class="nc" id="L67">            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();</span>
+        });
+<span class="nc" id="L69">        attachmentsLinkColumn.setCellFactory(value -&gt; {</span>
+<span class="nc" id="L70">            return new LinkTreeTableCell&lt;&gt;(Constants.ATTACHMENTS, (item) -&gt; {</span>
+<span class="nc" id="L71">                getNavigationManager().showUserAttachmentsDialog(item);</span>
+<span class="nc" id="L72">            });</span>
+        });
+
+<span class="nc" id="L75">        loadTextualTree();</span>
+<span class="nc" id="L76">    }</span>
+
+    @FXML
+    private void handleUserComboBox() {
+<span class="nc" id="L80">        loadTextualTree();</span>
+<span class="nc" id="L81">    }</span>
+
+    @FXML
+    private void handleAscendingCkeckbox() {
+<span class="nc" id="L85">        loadTextualTree();</span>
+<span class="nc" id="L86">    }</span>
+
+    private void loadTextualTree() {
+<span class="nc" id="L89">        boolean isAscending = ascendingCkeckbox.isSelected();</span>
+<span class="nc" id="L90">        User user = (User) userComboBox.getValue();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (user != null) {</span>
+<span class="nc" id="L92">            TreeItem&lt;User&gt; root = new TreeItem&lt;&gt;(user);</span>
+<span class="nc" id="L93">            root.getChildren().setAll(getTreeItemChildren(user, isAscending));</span>
+
+<span class="nc" id="L95">            userTreeTable.setRoot(root);</span>
+<span class="nc" id="L96">            userTreeTable.refresh();</span>
+        }
+<span class="nc" id="L98">    }</span>
+
+    private List&lt;TreeItem&lt;User&gt;&gt; getTreeItemChildren(final User user, final boolean isAscending) {
+<span class="nc" id="L101">        int id = user.getId();</span>
+<span class="nc" id="L102">        UserBusinessLogic userBusinessLogic = BusinessLogicLocator.getInstance()</span>
+<span class="nc" id="L103">                .getUserBusinessLogic();</span>
+
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        Collection&lt;UserRelationship&gt; relationships = isAscending ? user.getParents() : user.getChildren();</span>
+<span class="nc" id="L106">        List&lt;TreeItem&lt;User&gt;&gt; items = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L107">        relationships.forEach((rel) -&gt; {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            int relationId = rel.getRelationshipOf() == id ? rel.getRelationshipWith() : id;</span>
+<span class="nc" id="L109">            User relationUser = userBusinessLogic.getUser(relationId);</span>
+<span class="nc" id="L110">            TreeItem&lt;User&gt; item = new TreeItem&lt;&gt;(relationUser);</span>
+<span class="nc" id="L111">            item.getChildren().setAll(getTreeItemChildren(relationUser, isAscending));</span>
+<span class="nc" id="L112">            items.add(item);</span>
+<span class="nc" id="L113">        });</span>
+
+<span class="nc" id="L115">        return items;</span>
+    }
+
+    public static final class LinkTreeTableCell&lt;S, T&gt; extends TreeTableCell&lt;S, T&gt; {
+
+        private final Hyperlink link;
+        private T item;
+
+        public LinkTreeTableCell(final String linkText,
+<span class="nc" id="L124">                final LinkTreeTableCellActionEvent&lt;T&gt; actionEvent) {</span>
+
+<span class="nc" id="L126">            this.link = new Hyperlink(linkText);</span>
+<span class="nc" id="L127">            this.link.setOnAction((event) -&gt; {</span>
+<span class="nc" id="L128">                actionEvent.onClickLink(item);</span>
+<span class="nc" id="L129">            });</span>
+<span class="nc" id="L130">        }</span>
+
+        @Override
+        protected void updateItem(final T i, final boolean empty) {
+<span class="nc" id="L134">            item = i;</span>
+<span class="nc" id="L135">            super.updateItem(item, empty);</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">            if (!empty) {</span>
+<span class="nc" id="L137">                setGraphic(link);</span>
+            }
+<span class="nc" id="L139">        }</span>
+    }
+
+    public interface LinkTreeTableCellActionEvent&lt;T&gt; {
+
+        void onClickLink(T item);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
