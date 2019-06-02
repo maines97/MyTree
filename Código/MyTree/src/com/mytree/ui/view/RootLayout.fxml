@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mytree.ui.controller.RootLayoutController">
    <top>
@@ -66,6 +67,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Label fx:id="title" text=""/>
               </items>
             </ToolBar>
          </children>
