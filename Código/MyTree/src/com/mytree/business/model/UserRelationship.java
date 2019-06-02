@@ -5,9 +5,10 @@
  */
 package com.mytree.business.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public final class UserRelationship {
+public final class UserRelationship implements Serializable {
 
     private Relationship relationship;
     private int relationshipOf;

@@ -7,12 +7,13 @@ package com.mytree.business.dataaccess.impl;
 
 import com.mytree.business.dataaccess.UserRepository;
 import com.mytree.business.model.User;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 public final class UserRepositoryImpl
         extends RepositoryBase<List<User>>
-        implements UserRepository {
+        implements UserRepository, Serializable {
 
     private int identity = 0;
 

@@ -5,12 +5,13 @@
  */
 package com.mytree.business.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
-public final class User {
+public final class User implements Serializable {
 
     private static final int HASH = 7;
     private static final int HASH_RANDOM = 83;

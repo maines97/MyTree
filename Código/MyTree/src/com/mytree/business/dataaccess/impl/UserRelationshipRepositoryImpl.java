@@ -8,13 +8,14 @@ package com.mytree.business.dataaccess.impl;
 import com.mytree.business.dataaccess.UserRelationshipRepository;
 import com.mytree.business.model.Relationship;
 import com.mytree.business.model.UserRelationship;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public final class UserRelationshipRepositoryImpl
         extends RepositoryBase<UserRelationship[][]>
-        implements UserRelationshipRepository {
+        implements UserRelationshipRepository, Serializable {
 
     public UserRelationshipRepositoryImpl(final UserRelationship[][] dataSource) {
         super(dataSource);
