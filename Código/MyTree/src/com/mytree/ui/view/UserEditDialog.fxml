@@ -54,7 +54,7 @@
       </GridPane>
       <HBox layoutX="470.0" layoutY="361.0" spacing="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleSave" text="" />
+            <Button mnemonicParsing="false" onAction="#handleSave" text="Guardar" />
             <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
          </children>
       </HBox>
