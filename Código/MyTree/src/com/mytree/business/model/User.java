@@ -25,6 +25,8 @@ public final class User implements Serializable {
     private String picturePath;
     private String country;
     private Date birthday;
+    private Date death;
+    private boolean isDead;
     private Collection<UserRelationship> parents;
     private Collection<UserRelationship> children;
     private Collection<UserRelationship> spouses;
@@ -37,7 +39,9 @@ public final class User implements Serializable {
         this.firstSurname = "";
         this.secondSurname = "";
         this.country = "";
+        isDead = false;
         this.birthday = new Date();
+        this.death = new Date();
         this.parents = new ArrayList<>();
         this.children = new ArrayList<>();
         this.spouses = new ArrayList<>();
@@ -113,6 +117,22 @@ public final class User implements Serializable {
 
     public void setBirthday(final Date birthday) {
         this.birthday = (Date) birthday.clone();
+    }
+    
+    public Date getDeath() {
+        return (Date) death.clone();
+    }
+
+    public void setDeath(final Date birthday) {
+        this.death = (Date) birthday.clone();
+    }
+    
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setIsDead(final boolean isDead) {
+        this.isDead = isDead;
     }
 
     public Collection<UserRelationship> getParents() {

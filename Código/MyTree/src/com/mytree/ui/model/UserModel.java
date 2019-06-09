@@ -28,7 +28,9 @@ public final class UserModel {
     private StringProperty secondSurname;
     private StringProperty picturePath;
     private StringProperty country;
+    private Boolean isDead;
     private ObjectProperty<Date> birthday;
+    private ObjectProperty<Date> death;
 
     public UserModel(final User user) {
         this.id = new SimpleIntegerProperty(user.getId());
@@ -40,7 +42,8 @@ public final class UserModel {
         this.picturePath = new SimpleStringProperty(user.getPicturePath());
         this.country = new SimpleStringProperty(user.getCountry());
         this.birthday = new SimpleObjectProperty<>(user.getBirthday());
-
+        this.death = new SimpleObjectProperty<>(user.getDeath());
+       this.isDead = user.isDead();
     }
 
     public IntegerProperty getId() {
@@ -113,6 +116,22 @@ public final class UserModel {
 
     public void setBirthday(final ObjectProperty<Date> birthday) {
         this.birthday = birthday;
+    }
+    
+    public ObjectProperty<Date> getDeath() {
+        return death;
+    }
+
+    public void setDeath(final ObjectProperty<Date> death) {
+        this.death = death;
+    }
+    
+    public Boolean isDead() {
+        return isDead;
+    }
+
+    public void getIsDead(final Boolean isDead) {
+        this.isDead = isDead;
     }
 
     public boolean isNew() {

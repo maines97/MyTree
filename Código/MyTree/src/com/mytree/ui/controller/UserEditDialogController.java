@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -28,6 +29,8 @@ public final class UserEditDialogController
 
     @FXML
     private Label picturePathLabel;
+    @FXML
+    private Label deathLabel;
     @FXML
     private TextField usernameField;
     @FXML
@@ -41,7 +44,11 @@ public final class UserEditDialogController
     @FXML
     private TextField countryField;
     @FXML
-    private DatePicker birthdayField;
+    private DatePicker birthdayField;    
+    @FXML
+    private DatePicker deathField;
+    @FXML
+    private CheckBox isDeadCheckbox;
     @FXML
     private Button cancelButton;
 
@@ -67,6 +74,11 @@ public final class UserEditDialogController
         countryField.setText(userModel.getCountry().getValue());
         birthdayField.setValue(LocalDate.from(
                 Instant.ofEpochMilli(userModel.getBirthday().getValue().getTime()).atZone(ZoneId.systemDefault())));
+        if(userModel.isDead()){
+            isDeadCheckbox.setSelected(true);
+            deathField.setValue(LocalDate.from(
+                Instant.ofEpochMilli(userModel.getDeath().getValue().getTime()).atZone(ZoneId.systemDefault())));
+        }
     }
 
     public void allowCancel(final boolean allow) {
@@ -79,6 +91,9 @@ public final class UserEditDialogController
         FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
         fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+        isDeadCheckbox.setSelected(false);
+        deathField.setVisible(false);
+        deathLabel.setVisible(false);
     }
 
     @FXML
@@ -93,6 +108,13 @@ public final class UserEditDialogController
         user.setPicturePath(picturePathLabel.getText());
         user.setCountry(countryField.getText());
         user.setBirthday(Date.from(Instant.from(birthdayField.getValue().atStartOfDay(ZoneId.systemDefault()))));
+        if(isDeadCheckbox.isSelected()){
+            user.setIsDead(true);
+            user.setDeath(Date.from(Instant.from(deathField.getValue().atStartOfDay(ZoneId.systemDefault()))));
+        }
+        else {
+            user.setIsDead(false);
+        }
         // Make validations
         if (validateUser(user)) {
             BusinessLogicLocator.getInstance().getUserBusinessLogic().save(user);
@@ -109,6 +131,13 @@ public final class UserEditDialogController
     private void handleSelectPicture() {
         File file = fileChooser.showOpenDialog(dialogStage);
         picturePathLabel.setText(file.getAbsolutePath());
+    }
+    
+    @FXML
+    private void handleIsDeadCheckbox() {
+        boolean mustShowDeathDate = isDeadCheckbox.isSelected();
+        deathField.setVisible(mustShowDeathDate);
+        deathLabel.setVisible(mustShowDeathDate);
     }
 
     private boolean validateUser(final User user) {

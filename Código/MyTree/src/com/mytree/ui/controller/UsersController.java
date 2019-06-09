@@ -11,7 +11,11 @@ import com.mytree.ui.model.UserModel;
 import com.mytree.utils.Constants;
 import java.io.File;
 import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Locale;
+import java.time.Period;
+import java.time.ZoneId;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +47,10 @@ public final class UsersController extends BaseController {
     private Label countryLabel;
     @FXML
     private Label birthdayLabel;
+    @FXML
+    private Label deathTxt;
+    @FXML
+    private Label deathLabel;
     @FXML
     private ImageView pictureImage;
 
@@ -101,6 +109,16 @@ public final class UsersController extends BaseController {
             countryLabel.setText(user.getCountry());
             birthdayLabel.setText(DateFormat.getDateInstance(DateFormat.LONG, 
                     Locale.getDefault()).format(user.getBirthday()));
+            deathLabel.setVisible(user.isDead());
+            deathTxt.setVisible(user.isDead());
+            if(user.isDead()){                
+                Period diff = Period.between(
+                        LocalDate.from(Instant.ofEpochMilli(user.getBirthday().getTime()).atZone(ZoneId.systemDefault())), 
+                        LocalDate.from(Instant.ofEpochMilli(user.getDeath().getTime()).atZone(ZoneId.systemDefault())));
+                int diffYears = diff.getYears();
+                deathTxt.setText(DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(user.getDeath())
+                    + " (" + diffYears + " años)" );
+            }
         } else {
             usernameLabel.setText("");
             firstNameLabel.setText("");
@@ -109,6 +127,8 @@ public final class UsersController extends BaseController {
             secondSurnameLabel.setText("");
             countryLabel.setText("");
             birthdayLabel.setText("");
+            deathTxt.setText("");
+            deathLabel.setVisible(false);
         }
         pictureImage.setImage(new Image(imagePath));
     }

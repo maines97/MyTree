@@ -10,6 +10,10 @@ import com.mytree.business.model.User;
 import com.mytree.utils.Constants;
 import java.io.File;
 import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Locale;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -33,6 +37,10 @@ public final class UserDetailsDialogController extends BaseController {
     private Label countryLabel;
     @FXML
     private Label birthdayLabel;
+    @FXML
+    private Label deathLabel;
+    @FXML
+    private Label deathTxt;
     @FXML
     private ImageView pictureImage;
 
@@ -74,8 +82,16 @@ public final class UserDetailsDialogController extends BaseController {
         firstSurnameLabel.setText(user.getFirstSurname());
         secondSurnameLabel.setText(user.getSecondSurname());
         countryLabel.setText(user.getCountry());
-        birthdayLabel.setText(
-                DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(user.getBirthday()));
-
+        birthdayLabel.setText(DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(user.getBirthday()));
+        deathLabel.setVisible(user.isDead());
+        deathTxt.setVisible(user.isDead());
+        if(user.isDead()){
+            Period diff = Period.between(
+                        LocalDate.from(Instant.ofEpochMilli(user.getBirthday().getTime()).atZone(ZoneId.systemDefault())), 
+                        LocalDate.from(Instant.ofEpochMilli(user.getDeath().getTime()).atZone(ZoneId.systemDefault())));
+                int diffYears = diff.getYears();     
+            deathTxt.setText(DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault()).format(user.getDeath())
+                    + " (" + diffYears + " años)" );
+        }
     }
 }

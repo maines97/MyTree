@@ -24,6 +24,7 @@
             <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label text="Usuario" />
@@ -38,8 +39,10 @@
             <Label fx:id="secondSurnameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Nacimiento" GridPane.rowIndex="5" />
             <Label fx:id="birthdayLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label text="Nacionalidad" GridPane.rowIndex="6" />
-            <Label fx:id="countryLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="deathLabel" text="Fallecimiento" GridPane.rowIndex="6" />
+            <Label fx:id="deathTxt" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Nacionalidad" GridPane.rowIndex="7" />
+            <Label fx:id="countryLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
       <HBox layoutX="237.0" layoutY="359.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0">

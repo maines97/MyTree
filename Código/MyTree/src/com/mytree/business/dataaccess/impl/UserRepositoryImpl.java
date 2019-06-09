@@ -36,6 +36,7 @@ public final class UserRepositoryImpl
             user.setPicturePath(entity.getPicturePath());
             user.setCountry(entity.getCountry());
             user.setBirthday(entity.getBirthday());
+            user.setDeath(entity.getDeath());
         }
     }
 
