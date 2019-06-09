@@ -18,6 +18,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker.State;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
@@ -40,7 +46,8 @@ public final class TextualTreeController extends BaseController {
     private ComboBox userComboBox;
     @FXML
     private CheckBox ascendingCkeckbox;
-
+    
+    
     public TextualTreeController() {
     }
 
@@ -73,6 +80,38 @@ public final class TextualTreeController extends BaseController {
         });
 
         loadTextualTree();
+    }
+    
+    @FXML
+    private void handleAddRelationship() {
+        getNavigationManager().showUserRelationshipDialog();
+        ObservableList<User> users = FXCollections.observableArrayList();
+        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(false).forEach((user) -> {
+            users.add(user);
+        });
+        userComboBox.setItems(users);
+        userComboBox.getSelectionModel().selectFirst();
+        nameColumn.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(cellData.getValue().getValue().toString());
+        });
+        userDetailsLinkColumn.setCellValueFactory(cellData -> {
+            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();
+        });
+        userDetailsLinkColumn.setCellFactory(value -> {
+            return new LinkTreeTableCell<>(Constants.USER_DETAILS, (item) -> {
+                getNavigationManager().showUserDetails(item);
+            });
+        });
+        attachmentsLinkColumn.setCellValueFactory(cellData -> {
+            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();
+        });
+        attachmentsLinkColumn.setCellFactory(value -> {
+            return new LinkTreeTableCell<>(Constants.ATTACHMENTS, (item) -> {
+                getNavigationManager().showUserAttachmentsDialog(item);
+            });
+        });
+
+        //loadTextualTree();
     }
 
     @FXML

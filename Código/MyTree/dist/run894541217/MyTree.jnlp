@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="MyTree.jar" size="1278006" download="eager" />
+    <jar href="MyTree.jar" size="1278638" download="eager" />
     <jar href="lib\controlsfx-8.40.12.jar" size="996389" download="eager" />
     <jar href="lib\json-simple-1.1.jar" size="16046" download="eager" />
   </resources>
