@@ -89,6 +89,15 @@ public final class UserTest {
         assertEquals(expected, instance.getBirthday());
         assertNotSame(expected, instance.getBirthday());
     }
+    
+     @Test
+    public void testDeathPropertyCase() {
+        Date expected = new Date();
+        User instance = new User();
+        instance.setDeath(expected);
+        assertEquals(expected, instance.getDeath());
+        assertNotSame(expected, instance.getDeath());
+    }
 
     @Test
     public void testSpousesPropertyCase() {
