@@ -1962,14 +1962,14 @@ $.widget("ui.draggable", $.ui.mouse, {
 				this.offset.click.top	-												// Click offset (relative to the element)
 				this.offset.relative.top -												// Only for relative positioned nodes: Relative offset from element to offset parent
 				this.offset.parent.top +												// The offsetParent's offset without borders (offset + border)
-				( ( this.cssPosition === "fixed" ? -this.scrollParent.scrollTop() : ( scrollIsRootNode ? 0 : scroll.scrollTop() ) ))
+				( this.cssPosition === "fixed" ? -this.scrollParent.scrollTop() : ( scrollIsRootNode ? 0 : scroll.scrollTop() ) )
 			),
 			left: (
 				pageX -																	// The absolute mouse position
 				this.offset.click.left -												// Click offset (relative to the element)
 				this.offset.relative.left -												// Only for relative positioned nodes: Relative offset from element to offset parent
 				this.offset.parent.left +												// The offsetParent's offset without borders (offset + border)
-				( ( this.cssPosition === "fixed" ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() ))
+				( this.cssPosition === "fixed" ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() )
 			)
 		};
 
@@ -5063,14 +5063,14 @@ $.widget("ui.sortable", $.ui.mouse, {
 				this.offset.click.top -													// Click offset (relative to the element)
 				this.offset.relative.top	-											// Only for relative positioned nodes: Relative offset from element to offset parent
 				this.offset.parent.top +												// The offsetParent's offset without borders (offset + border)
-				( ( this.cssPosition === "fixed" ? -this.scrollParent.scrollTop() : ( scrollIsRootNode ? 0 : scroll.scrollTop() ) ))
+				 ( this.cssPosition === "fixed" ? -this.scrollParent.scrollTop() : ( scrollIsRootNode ? 0 : scroll.scrollTop() ) )
 			),
 			left: (
 				pageX -																// The absolute mouse position
 				this.offset.click.left -												// Click offset (relative to the element)
 				this.offset.relative.left	-											// Only for relative positioned nodes: Relative offset from element to offset parent
 				this.offset.parent.left +												// The offsetParent's offset without borders (offset + border)
-				( ( this.cssPosition === "fixed" ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() ))
+				( this.cssPosition === "fixed" ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft() )
 			)
 		};
 
@@ -7681,11 +7681,11 @@ $.extend(Datepicker.prototype, {
 		var $target = $(event.target),
 			inst = $.datepicker._getInst($target[0]);
 
-		if ( ( ( $target[0].id !== $.datepicker._mainDivId &&
+		if ( ( $target[0].id !== $.datepicker._mainDivId &&
 				$target.parents("#" + $.datepicker._mainDivId).length === 0 &&
 				!$target.hasClass($.datepicker.markerClassName) &&
 				!$target.closest("." + $.datepicker._triggerClass).length &&
-				$.datepicker._datepickerShowing && !($.datepicker._inDialog && $.blockUI) ) ) ||
+				$.datepicker._datepickerShowing && !($.datepicker._inDialog && $.blockUI) )  ||
 			( $target.hasClass($.datepicker.markerClassName) && $.datepicker._curInst !== inst ) ) {
 				$.datepicker._hideDatepicker();
 		}

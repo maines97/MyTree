@@ -490,8 +490,7 @@ jQuery.extend({
 		// if last one is own, then all properties are own.
 
 		var key;
-		for ( key in obj ) {}
-
+		
 		return key === undefined || core_hasOwn.call( obj, key );
 	},
 
@@ -1536,7 +1535,10 @@ jQuery.support = (function() {
 		body.removeChild( container );
 
 		// Null elements to avoid leaks in IE
-		container = div = tds = marginDiv = null;
+		container = null; 
+                div = null;
+                tds = null;
+                marginDiv = null;
 	});
 
 	// Null elements to avoid leaks in IE
@@ -6191,7 +6193,8 @@ jQuery.fn.extend({
 				}
 
 				// Fix #11809: Avoid leaking memory
-				fragment = first = null;
+				fragment = null;
+                                first = null;
 			}
 		}
 
@@ -6428,7 +6431,7 @@ jQuery.extend({
 			setGlobalEval( destElements, !inPage && getAll( elem, "script" ) );
 		}
 
-		destElements = srcElements = node = null;
+		destElements = null;srcElements = null;node = null;
 
 		// Return the cloned set
 		return clone;
@@ -6555,8 +6558,6 @@ jQuery.extend({
 				}
 			}
 		}
-
-		tmp = null;
 
 		return safe;
 	},
@@ -9145,7 +9146,7 @@ jQuery.fn.extend({
 			clearQueue = type;
 			type = undefined;
 		}
-		if ( clearQueue && type !== false ) {
+		if ( clearQueue && type != false ) {
 			this.queue( type || "fx", [] );
 		}
 

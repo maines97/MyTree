@@ -1582,7 +1582,7 @@ EventEmitter.prototype.addListener = function(type, listener) {
 
   // Check for listener leak
   if (isObject(this._events[type]) && !this._events[type].warned) {
-    var m;
+    
     if (!isUndefined(this._maxListeners)) {
       m = this._maxListeners;
     } else {
@@ -2624,7 +2624,7 @@ Readable.prototype.pipe = function(dest, pipeOpts) {
 
 function pipeOnDrain(src) {
   return function() {
-    var dest = this;
+    
     var state = src._readableState;
     state.awaitDrain--;
     if (state.awaitDrain === 0)
