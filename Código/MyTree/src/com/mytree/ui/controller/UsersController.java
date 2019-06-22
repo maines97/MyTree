@@ -83,6 +83,15 @@ public final class UsersController extends BaseController {
             reload();
         }
     }
+    
+    @FXML
+    private void showAttachments() {
+        User user = checkUserSelection();
+        if (user != null) {
+            getNavigationManager().showUserAttachmentsDialog(user.getId());
+            reload();
+        }
+    }
 
     private void reload() {
         ObservableList<User> users = FXCollections.observableArrayList();

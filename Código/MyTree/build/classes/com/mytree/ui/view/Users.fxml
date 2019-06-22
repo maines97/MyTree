@@ -37,9 +37,9 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
@@ -67,6 +67,7 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleNewUser" text="Nuevo Usuario" />
                         <Button mnemonicParsing="false" onAction="#handleEditUser" text="Editar Usuario" />
+                        <Button mnemonicParsing="false" onAction="#showAttachments" text="Ver Adjuntos" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="134.0" layoutY="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
