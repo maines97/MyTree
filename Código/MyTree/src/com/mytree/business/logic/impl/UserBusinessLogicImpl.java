@@ -36,7 +36,7 @@ public final class UserBusinessLogicImpl
     public Collection<User> getUsers(final boolean lazy) {
         Collection<User> users = getRepository().getUsers();
         if (!lazy) {
-            users.forEach((user) -> {
+            users.forEach(user -> {
                 user.setParents(getParents(user.getId()));
                 user.setSpouses(getSpouses(user.getId()));
                 user.setChildren(getChildren(user.getId()));

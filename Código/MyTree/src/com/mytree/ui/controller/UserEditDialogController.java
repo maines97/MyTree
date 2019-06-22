@@ -57,6 +57,7 @@ public final class UserEditDialogController
     private UserModel userModel;
 
     public UserEditDialogController() {
+        //CONSTRUCTOR
     }
 
     public void setDialogStage(final Stage dialogStage) {

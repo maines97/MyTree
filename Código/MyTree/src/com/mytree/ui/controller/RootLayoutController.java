@@ -14,6 +14,7 @@ public final class RootLayoutController extends BaseController {
     private Label title;
 
     public RootLayoutController() {
+        //CONSTRUCTOR
     }
 
     @Override

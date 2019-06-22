@@ -27,6 +27,7 @@ public final class TreeController extends BaseController {
     private WebEngine webEngine;
 
     public TreeController() {
+        //CONSTRUCTOR
     }
 
     public void reload() {
@@ -54,9 +55,9 @@ public final class TreeController extends BaseController {
 
     private JSONArray getTreeItems() {
         JSONArray items = new JSONArray();
-        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(false).forEach((User user) -> {
-            items.add(getTreeItem(user));
-        });
+        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(false).forEach((User user) -> 
+            items.add(getTreeItem(user))
+        );
         return items;
     }
 
@@ -71,9 +72,9 @@ public final class TreeController extends BaseController {
 
     private List<Integer> getRelationshipsIds(final Collection<UserRelationship> userRelationships) {
         List<Integer> result = new ArrayList<>();
-        userRelationships.forEach((userRelationship) -> {
-            result.add(userRelationship.getRelationshipWith());
-        });
+        userRelationships.forEach(userRelationship -> 
+            result.add(userRelationship.getRelationshipWith())
+        );
         return result;
     }
 }

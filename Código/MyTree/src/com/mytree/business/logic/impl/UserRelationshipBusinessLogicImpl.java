@@ -32,7 +32,7 @@ public final class UserRelationshipBusinessLogicImpl
         
         Collection<UserRelationship> userRealationships = getRepository().getRealationships(id);
         List<UserRelationship> result = new ArrayList<>();
-        userRealationships.forEach((userRelationship) -> {
+        userRealationships.forEach(userRelationship -> {
             if (relationships.contains(userRelationship.getRelationship())) {
                 result.add(userRelationship);
             }

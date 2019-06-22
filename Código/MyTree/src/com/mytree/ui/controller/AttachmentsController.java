@@ -63,9 +63,7 @@ public final class AttachmentsController extends BaseController {
     @Override
     protected void onInitialize() {
         historyTextArea.setEditable(false);
-        nameColumn.setCellValueFactory(cellData -> {
-            return new SimpleStringProperty(cellData.getValue().getName());
-        });
+        nameColumn.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getName()));
         attachmentTable.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue)
                         -> showAttachmentDetails(newValue));
@@ -88,7 +86,7 @@ public final class AttachmentsController extends BaseController {
 
     private void reload() {
         ObservableList<Attachment> attachments = FXCollections.observableArrayList();
-        getAttachments().forEach((attachment) -> {
+        getAttachments().forEach(attachment -> {
             attachments.add(attachment);
         });
         attachmentTable.setItems(attachments);

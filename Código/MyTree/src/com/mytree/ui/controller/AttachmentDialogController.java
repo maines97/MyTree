@@ -75,7 +75,7 @@ public final class AttachmentDialogController extends BaseController {
         BusinessLogicLocator locator = BusinessLogicLocator.getInstance();
         Collection<User> users = locator.getUserBusinessLogic().getUsers(true);
         Map<Integer, User> usersMap = new HashMap<>();
-        users.forEach((user) -> usersMap.put(user.getId(), user));
+        users.forEach(user -> usersMap.put(user.getId(), user));
         ObservableList<OwnerItem> userList = getAttachmentUserOwners(users);
         ObservableList<OwnerItem> marriedList = getAttachmentUserRelationshipOwners(usersMap, Relationship.MARRIED);
         ObservableList<OwnerItem> unionList = getAttachmentUserRelationshipOwners(usersMap, Relationship.UNION);
@@ -156,7 +156,7 @@ public final class AttachmentDialogController extends BaseController {
     private ObservableList<OwnerItem> getAttachmentUserOwners(final Collection<User> users) {
         ObservableList<OwnerItem> result = FXCollections.observableArrayList();
         result.add(new OwnerItem(new ArrayList<>(), Constants.FAMILY));
-        users.forEach((user) -> {
+        users.forEach(user -> {
             List<Integer> owners = new ArrayList<>();
             owners.add(user.getId());
             result.add(new OwnerItem(owners, user.toString()));

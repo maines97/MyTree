@@ -51,6 +51,7 @@ public final class UserRelationshipDialogController extends BaseController {
     private Stage dialogStage;
 
     public UserRelationshipDialogController() {
+        //CONSTRUCTOR
     }
 
     @Override
@@ -64,7 +65,7 @@ public final class UserRelationshipDialogController extends BaseController {
 
     @FXML
     private void handleUserComboBoxSelection() {
-        List<User> excludedUsers = new ArrayList<User>();
+        List<User> excludedUsers = new ArrayList<>();
         excludedUsers.add((User) userComboBox.getValue());
         thirdFieldComboBox.setItems(getUsers(excludedUsers));
         thirdFieldComboBox.getSelectionModel().selectFirst();
@@ -147,7 +148,7 @@ public final class UserRelationshipDialogController extends BaseController {
 
     private ObservableList<User> getUsers(final List<User> excludedUsers) {
         ObservableList<User> users = FXCollections.observableArrayList();
-        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(true).forEach((user) -> {
+        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(true).forEach(user -> {
             if (excludedUsers == null || !excludedUsers.contains(user)) {
                 users.add(user);
             }

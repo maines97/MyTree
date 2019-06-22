@@ -49,35 +49,34 @@ public final class TextualTreeController extends BaseController {
     
     
     public TextualTreeController() {
+        //CONSTRUCTOR
     }
 
     @Override
     protected void onInitialize() {
         ObservableList<User> users = FXCollections.observableArrayList();
-        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(false).forEach((user) -> {
-            users.add(user);
-        });
+        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(false).forEach(user -> users.add(user));
         userComboBox.setItems(users);
         userComboBox.getSelectionModel().selectFirst();
-        nameColumn.setCellValueFactory(cellData -> {
-            return new SimpleStringProperty(cellData.getValue().getValue().toString());
-        });
-        userDetailsLinkColumn.setCellValueFactory(cellData -> {
-            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();
-        });
-        userDetailsLinkColumn.setCellFactory(value -> {
-            return new LinkTreeTableCell<>(Constants.USER_DETAILS, (item) -> {
-                getNavigationManager().showUserDetails(item);
-            });
-        });
-        attachmentsLinkColumn.setCellValueFactory(cellData -> {
-            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();
-        });
-        attachmentsLinkColumn.setCellFactory(value -> {
-            return new LinkTreeTableCell<>(Constants.ATTACHMENTS, (item) -> {
-                getNavigationManager().showUserAttachmentsDialog(item);
-            });
-        });
+        nameColumn.setCellValueFactory(cellData -> 
+            new SimpleStringProperty(cellData.getValue().getValue().toString())
+        );
+        userDetailsLinkColumn.setCellValueFactory(cellData -> 
+            new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject()
+        );
+        userDetailsLinkColumn.setCellFactory(value -> 
+            new LinkTreeTableCell<>(Constants.USER_DETAILS, item -> 
+                getNavigationManager().showUserDetails(item)
+            )
+        );
+        attachmentsLinkColumn.setCellValueFactory(cellData -> 
+            new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject()
+        );
+        attachmentsLinkColumn.setCellFactory(value -> 
+            new LinkTreeTableCell<>(Constants.ATTACHMENTS, item -> 
+                getNavigationManager().showUserAttachmentsDialog(item)
+            )
+        );
 
         loadTextualTree();
     }
@@ -91,25 +90,25 @@ public final class TextualTreeController extends BaseController {
         });
         userComboBox.setItems(users);
         userComboBox.getSelectionModel().selectFirst();
-        nameColumn.setCellValueFactory(cellData -> {
-            return new SimpleStringProperty(cellData.getValue().getValue().toString());
-        });
-        userDetailsLinkColumn.setCellValueFactory(cellData -> {
-            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();
-        });
-        userDetailsLinkColumn.setCellFactory(value -> {
-            return new LinkTreeTableCell<>(Constants.USER_DETAILS, (item) -> {
-                getNavigationManager().showUserDetails(item);
-            });
-        });
-        attachmentsLinkColumn.setCellValueFactory(cellData -> {
-            return new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject();
-        });
-        attachmentsLinkColumn.setCellFactory(value -> {
-            return new LinkTreeTableCell<>(Constants.ATTACHMENTS, (item) -> {
-                getNavigationManager().showUserAttachmentsDialog(item);
-            });
-        });
+        nameColumn.setCellValueFactory(cellData -> 
+            new SimpleStringProperty(cellData.getValue().getValue().toString())
+        );
+        userDetailsLinkColumn.setCellValueFactory(cellData -> 
+            new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject()
+        );
+        userDetailsLinkColumn.setCellFactory(value -> 
+            new LinkTreeTableCell<>(Constants.USER_DETAILS, item -> 
+                getNavigationManager().showUserDetails(item)
+            )
+        );
+        attachmentsLinkColumn.setCellValueFactory(cellData -> 
+            new SimpleIntegerProperty(cellData.getValue().getValue().getId()).asObject()
+        );
+        attachmentsLinkColumn.setCellFactory(value -> 
+            new LinkTreeTableCell<>(Constants.ATTACHMENTS, item -> 
+                getNavigationManager().showUserAttachmentsDialog(item)
+            )
+        );
 
         //loadTextualTree();
     }
@@ -143,7 +142,7 @@ public final class TextualTreeController extends BaseController {
 
         Collection<UserRelationship> relationships = isAscending ? user.getParents() : user.getChildren();
         List<TreeItem<User>> items = new ArrayList<>();
-        relationships.forEach((rel) -> {
+        relationships.forEach(rel -> {
             int relationId = rel.getRelationshipOf() == id ? rel.getRelationshipWith() : id;
             User relationUser = userBusinessLogic.getUser(relationId);
             TreeItem<User> item = new TreeItem<>(relationUser);
@@ -163,9 +162,9 @@ public final class TextualTreeController extends BaseController {
                 final LinkTreeTableCellActionEvent<T> actionEvent) {
 
             this.link = new Hyperlink(linkText);
-            this.link.setOnAction((event) -> {
-                actionEvent.onClickLink(item);
-            });
+            this.link.setOnAction(event -> 
+                actionEvent.onClickLink(item)
+            );
         }
 
         @Override

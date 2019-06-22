@@ -48,6 +48,7 @@ public final class UserDetailsDialogController extends BaseController {
     private int userId;
 
     public UserDetailsDialogController() {
+        //CONSTRUCTOR
     }
 
     public void setDialogStage(final Stage dialogStage) {
@@ -61,6 +62,7 @@ public final class UserDetailsDialogController extends BaseController {
 
     @Override
     protected void onInitialize() {
+        //INITIALIZING
     }
 
     @FXML

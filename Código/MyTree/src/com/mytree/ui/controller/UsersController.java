@@ -55,13 +55,14 @@ public final class UsersController extends BaseController {
     private ImageView pictureImage;
 
     public UsersController() {
+        //CONSTRUCTOR
     }
 
     @Override
     protected void onInitialize() {
-        nameColumn.setCellValueFactory(cellData -> {
-            return new SimpleStringProperty(cellData.getValue().toString());
-        });
+        nameColumn.setCellValueFactory(cellData -> 
+            new SimpleStringProperty(cellData.getValue().toString())
+        );
         userTable.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> showUserDetails(newValue));
         showUserDetails(null);
@@ -95,9 +96,7 @@ public final class UsersController extends BaseController {
 
     private void reload() {
         ObservableList<User> users = FXCollections.observableArrayList();
-        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(true).forEach((user) -> {
-            users.add(user);
-        });
+        BusinessLogicLocator.getInstance().getUserBusinessLogic().getUsers(true).forEach(user -> users.add(user));
         userTable.setItems(users);
         userTable.refresh();
     }

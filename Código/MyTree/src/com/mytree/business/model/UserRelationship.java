@@ -18,6 +18,7 @@ public final class UserRelationship implements Serializable {
     private boolean currentRelationship;
 
     public UserRelationship() {
+        // CONSTRUCTOR
     }
 
     public Relationship getRelationship() {
