@@ -116,7 +116,7 @@ public final class UserEditDialogController
             user.setIsDead(false);
         }
         // Make validations
-        if (validateUser(user)) {
+        if (validateUser(user) && validateBirthday()) {
             BusinessLogicLocator.getInstance().getUserBusinessLogic().save(user);
             dialogStage.close();
         }
@@ -138,6 +138,25 @@ public final class UserEditDialogController
         boolean mustShowDeathDate = isDeadCheckbox.isSelected();
         deathField.setVisible(mustShowDeathDate);
         deathLabel.setVisible(mustShowDeathDate);
+    }
+    
+    private boolean validateBirthday() {
+        LocalDate birthday = birthdayField.getValue();
+        LocalDate today = LocalDate.now();
+        if (birthday.compareTo(today) > 0) {
+            getNavigationManager().showAlert(AlertType.ERROR, Constants.USER_ERROR, 
+                    "Error fecha", "La fecha de nacimiento debe de haber pasado");
+            return false;
+        }
+        if(isDeadCheckbox.isSelected()) {
+            LocalDate death = deathField.getValue();
+            if (birthday.compareTo(death) > 0) {
+                getNavigationManager().showAlert(AlertType.ERROR, Constants.USER_ERROR, 
+                    "Error fecha", "La fecha de fallecimiento no puede ser antes que la de nacimiento");
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean validateUser(final User user) {
