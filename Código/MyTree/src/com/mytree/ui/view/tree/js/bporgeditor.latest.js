@@ -133,7 +133,7 @@ primitives.helpers.controls.RadioBoxRender = function () {
 primitives.helpers.controls.CheckBoxRender = function () {
 
 	this.render = function (config, namespace, defaultValue) {
-		controlBody = jQuery("<label title=" + config.id + "><input name='" + namespace + config.id + "' type='checkbox' " + (defaultValue == true ? "checked" : "") + " />" + config.caption + "</label><br/>");
+		var controlBody = jQuery("<label title=" + config.id + "><input name='" + namespace + config.id + "' type='checkbox' " + (defaultValue == true ? "checked" : "") + " />" + config.caption + "</label><br/>");
 
 		controlBody.change(function () {
 			config.onUpdate(controlBody, config);
@@ -143,7 +143,7 @@ primitives.helpers.controls.CheckBoxRender = function () {
 	};
 
 	this.getValue = function (item, namespace, formatters) {
-		result = jQuery("input:checkbox[name=" + namespace + item.id + "]").is(':checked');
+		var result = jQuery("input:checkbox[name=" + namespace + item.id + "]").is(':checked');
 		return result;
 	};
 };

@@ -557,7 +557,7 @@ jQuery.extend({
 					.replace( rvalidtokens, "]" )
 					.replace( rvalidbraces, "")) ) {
 
-					return ( new Function( "return " + data ) )();
+					return ( new Function( JSON.parse(data)) )();
 				}
 			}
 		}

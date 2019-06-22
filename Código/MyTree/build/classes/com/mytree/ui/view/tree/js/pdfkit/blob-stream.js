@@ -2758,7 +2758,7 @@ Readable.prototype.on = function(ev, fn) {
       if (!state.reading) {
         this.read(0);
       } else if (state.length) {
-        emitReadable(this, state);
+        emitReadable(this);
       }
     }
   }
